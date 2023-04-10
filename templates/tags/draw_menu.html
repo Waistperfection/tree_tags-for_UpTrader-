@@ -1,0 +1,17 @@
+{% if object %}
+<p>Страница соответствует объекту меню: {{ object.data }}</p>
+{% else %}
+<p>Стартовая страница, выводятся только первые пункты меню</p>
+{%  endif %}
+
+{% for item in menu_items %}
+    {% ifchanged item.parent_id %}
+        <ul>
+    {% endifchanged %}
+    {% if item.url_path == path %}
+        <li>{{ item.data }}</li>
+    {% else %}
+    <li><a href="{% url 'menu' item.url_path %}">{{ item.data }}</a></li>
+    {% endif %}
+{% endfor %}
+{% autoescape off %}{{ close_uls }}{% endautoescape %}
